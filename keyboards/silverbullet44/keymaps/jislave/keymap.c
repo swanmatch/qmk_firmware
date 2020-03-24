@@ -37,7 +37,7 @@ enum custom_keycodes {
 
 #define CALC LT(_CALC,   KC_ESC)
 #define CUSL LT(_CURSOL, KC_TAB)
-#define JISHIFT MO(_JISHIFT)
+#define JISHIFT LT(_JISHIFT, KC_RSFT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -57,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,    KC_Q, KC_W, KC_E, KC_R, KC_T,                KC_Y,   KC_U,    KC_I,    KC_O,   KC_P,    JP_EQL,
     JISHIFT,   KC_A, KC_S, KC_D, KC_F, KC_G,                KC_H,   KC_J,    KC_K,    KC_L,   JP_COLN, JP_QUOT,
     KC_LCTRL,  KC_Z, KC_X, KC_C, KC_V, KC_B,                KC_N,   KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-     LALT_T(KC_F5), KC_BSPC, LT(_JISHIFT,KC_SPC), CALC,    CUSL, LCTL_T(KC_ENT), KC_DEL, GUI_T(KC_F12)
+    LALT_T(KC_F5), KC_BSPC, LT(_JISHIFT,KC_SPC), CALC,    CUSL, LCTL_T(KC_ENT), KC_DEL, GUI_T(KC_F12)
   ),
 
 /* Cursol
@@ -73,10 +73,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                          `-----------------------------'         '-----------------------------'
  */
   [_CURSOL] = LAYOUT(
-  RESET ,  KC_F1,   KC_F2,      KC_PGUP, KC_F4,      KC_F5,                              KC_F6,   KC_F7,        KC_UP,   KC_F9,        KC_F10,  RESET,
-  _______, JP_TILD, KC_HOME,    KC_PGDN, KC_END,     JP_LPRN,                            JP_RPRN, KC_LEFT,      KC_DOWN, KC_RGHT,      JP_PIPE, KC_F11,
-  _______, JP_GRV,  C(KC_LEFT), KC_F3,   C(KC_RGHT), S(ALTAB),                           ALTAB,   LCA(KC_LEFT), KC_F8,   LCA(KC_RGHT), JP_BSLS, RGBRST,
-                                _______,    _______, C(KC_SPC), MO(_ADJUST),    _______, _______, _______, _______
+  RESET ,  KC_F1,   KC_F2,      KC_PGUP, KC_F4,      KC_F5,                            KC_F6,   KC_F7,        KC_UP,   KC_F9,        KC_F10,  RESET,
+  KC_LSFT, JP_TILD, KC_HOME,    KC_PGDN, KC_END,     JP_LPRN,                          JP_RPRN, KC_LEFT,      KC_DOWN, KC_RGHT,      JP_PIPE, KC_F11,
+  _______, JP_GRV,  C(KC_LEFT), KC_F3,   C(KC_RGHT), S(ALTAB),                         ALTAB,   LCA(KC_LEFT), KC_F8,   LCA(KC_RGHT), JP_BSLS, RGBRST,
+                                _______,    _______, KC_LSFT, MO(_ADJUST),    _______, _______, _______, _______
   ),
 
 /* Calculater
@@ -92,10 +92,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                          `-----------------------------'         '------------------------------'
  */
   [_CALC] = LAYOUT(
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-  _______, JP_AT,   JP_HASH, JP_DLR,  JP_PERC, JP_LBRC,                        JP_RBRC, KC_4,    KC_5,    KC_6,    KC_PPLS, _______,
-  _______, JP_CIRC, JP_AMPR, JP_ASTR, JP_EXLM, JP_LCBR,                        JP_RCBR, KC_1,    KC_2,    KC_3,    KC_PEQL, _______,
-                             _______, _______, _______, _______,   MO(_ADJUST), KC_0,    KC_00,   KC_PDOT
+  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                             KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+  _______, JP_AT,   JP_HASH, JP_DLR,  JP_PERC, JP_LBRC,                          JP_RBRC, KC_4,    KC_5,    KC_6,    KC_PPLS, _______,
+  _______, JP_CIRC, JP_AMPR, JP_ASTR, JP_EXLM, JP_LCBR,                          JP_RCBR, KC_1,    KC_2,    KC_3,    KC_PEQL, _______,
+                             _______, _______, _______, _______,    MO(_ADJUST), KC_0,    KC_00,   KC_PDOT
   ),
 
 /*   ADJUST
@@ -117,11 +117,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX, XXXXXXX, MU_MOD,  CK_DOWN, XXXXXXX, XXXXXXX,                      RGB_SPD, RGB_RMOD, RGB_VAD, RGB_SAD, RGB_HUD, XXXXXXX,
                              XXXXXXX, XXXXXXX, XXXXXXX, _______,    _______, XXXXXXX, XXXXXXX, XXXXXXX
   ),
+// ShiftLayer for JIS
   [_JISHIFT] = LAYOUT(
-    S(KC_TAB),    S(KC_Q), S(KC_W), S(KC_E), S(KC_R), S(KC_T),                S(KC_Y),   S(KC_U),    S(KC_I),    S(KC_O),   S(KC_P),    JP_PLUS,
-    _______,      S(KC_A), S(KC_S), S(KC_D), S(KC_F), S(KC_G),                S(KC_H),   S(KC_J),    S(KC_K),    S(KC_L),   JP_SCLN,    JP_DQUO,
-    S(KC_LCTRL),  S(KC_Z), S(KC_X), S(KC_C), S(KC_V), S(KC_B),                S(KC_N),   S(KC_M),    S(KC_COMM), S(KC_DOT), S(KC_SLSH), JP_UNDS,
-    S(LALT_T(KC_F5)), S(KC_BSPC), _______, S(CALC),    S(CUSL), S(LCTL_T(KC_ENT)), S(KC_DEL), S(GUI_T(KC_F12))
+    S(KC_TAB),    S(KC_Q), S(KC_W), S(KC_E), S(KC_R), S(KC_T),                      S(KC_Y),   S(KC_U),    S(KC_I),    S(KC_O),   S(KC_P),    JP_PLUS,
+    _______,      S(KC_A), S(KC_S), S(KC_D), S(KC_F), S(KC_G),                      S(KC_H),   S(KC_J),    S(KC_K),    S(KC_L),   JP_SCLN,    JP_DQUO,
+    S(KC_LCTRL),  S(KC_Z), S(KC_X), S(KC_C), S(KC_V), S(KC_B),                      S(KC_N),   S(KC_M),    S(KC_COMM), S(KC_DOT), S(KC_SLSH), JP_UNDS,
+                        S(LALT_T(KC_F5)), S(KC_BSPC), _______, _______,    _______, S(LCTL_T(KC_ENT)), S(KC_DEL), S(GUI_T(KC_F12))
   ),
 };
 
