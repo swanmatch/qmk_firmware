@@ -1,8 +1,6 @@
 # MCU name
 MCU = atmega32u4
 
-<<<<<<< HEAD
-=======
 # Bootloader selection
 #   Teensy       halfkay
 #   Pro Micro    caterina
@@ -13,7 +11,6 @@ MCU = atmega32u4
 #   ATmega328P   USBasp
 BOOTLOADER = caterina
 
->>>>>>> 8f69983c58e7c8025d55ccdb31bcf570158f5433
 # Build Options
 #   change yes to no to disable
 #
