@@ -74,9 +74,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_CURSOL] = LAYOUT(
   RESET ,  KC_F1,   KC_F2,      KC_PGUP, KC_F4,      KC_F5,                              KC_F6,   KC_F7,        KC_UP,   KC_F9,        KC_F10,  RESET,
-  KC_LSFT, JP_TILD, KC_HOME,    KC_PGDN, KC_END,     JP_LPRN,                            JP_RPRN, KC_LEFT,      KC_DOWN, KC_RGHT,      JP_PIPE, KC_F11,
+  _______, JP_TILD, KC_HOME,    KC_PGDN, KC_END,     JP_LPRN,                            JP_RPRN, KC_LEFT,      KC_DOWN, KC_RGHT,      JP_PIPE, KC_F11,
   _______, JP_GRV,  C(KC_LEFT), KC_F3,   C(KC_RGHT), S(ALTAB),                           ALTAB,   LCA(KC_LEFT), KC_F8,   LCA(KC_RGHT), JP_BSLS, RGBRST,
-                                _______,    _______, KC_LSFT, MO(_ADJUST),    _______, _______, _______, _______
+                                _______,    _______, C(KC_SPC), MO(_ADJUST),    _______, _______, _______, _______
   ),
 
 /* Calculater
@@ -115,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, XXXXXXX, XXXXXXX, CK_RST,  XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, _______,
   XXXXXXX, XXXXXXX, MU_TOG,  CK_UP,   AU_TOG,  XXXXXXX,                      RGB_SPI, RGB_MOD,  RGB_VAI, RGB_SAI, RGB_HUI, XXXXXXX,
   XXXXXXX, XXXXXXX, MU_MOD,  CK_DOWN, XXXXXXX, XXXXXXX,                      RGB_SPD, RGB_RMOD, RGB_VAD, RGB_SAD, RGB_HUD, XXXXXXX,
-                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+                             XXXXXXX, XXXXXXX, XXXXXXX, _______,    _______, XXXXXXX, XXXXXXX, XXXXXXX
   ),
   [_JISHIFT] = LAYOUT(
     S(KC_TAB),    S(KC_Q), S(KC_W), S(KC_E), S(KC_R), S(KC_T),                S(KC_Y),   S(KC_U),    S(KC_I),    S(KC_O),   S(KC_P),    JP_PLUS,
@@ -183,6 +183,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
     }
     return true;
+}
+
+void startup_user() {
+    _delay_ms(100); // gets rid of tick
 }
 
 void matrix_init_user(void) {
