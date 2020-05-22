@@ -43,6 +43,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #define MATRIX_ROW_PINS { B1,B3,B2,B6 }
 #define MATRIX_COL_PINS { B4,E6,D7,C6 }
+
+#define ENCODERS_PAD_A { F6, F4 }
+#define ENCODERS_PAD_B { F7, F5 }
+#define ENCODER_RESOLUTION 4
+
 #define UNUSED_PINS
 
 /* COL2ROW, ROW2COL*/

@@ -20,20 +20,14 @@ enum layer_names {
     _BASE,
     _RAISE,
     _LOWER,
-    _ADJUST,
     _NUM,
+    _ADJUST
 };
 
 #define ESC   LT(_NUM,    KC_ESC )
 #define ENT   LT(_ADJUST, KC_ENT )
 #define MUTE1 LT(_RAISE,  KC_MUTE)
 #define MUTE2 LT(_LOWER,  KC_MUTE)
-
-// Defines the keycodes used by our macros in process_record_user
-enum custom_keycodes {
-    QMKBEST = SAFE_RANGE,
-    QMKURL
-};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = {
@@ -69,13 +63,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-  //iota_gfx_force_dirty();
   if (index == 0) { /* left encoder */
-    if (layer_state == _ADJUST) {
+    if (layer_state == (1<<_ADJUST)) {
       if (clockwise) {
-        tap_code(KC_VOLU);
+        tap_code(KC_UP);
       } else {
-        tap_code(KC_VOLD);
+        tap_code(KC_DOWN);
       }
     } else {
       if (clockwise) {
@@ -85,11 +78,11 @@ void encoder_update_user(uint8_t index, bool clockwise) {
       }
     }
   } else if (index == 1) { /* right encoder */
-    if (clockwise) {
-      tap_code(KC_UP);
-    } else {
-      tap_code(KC_DOWN);
-    }
+      if (clockwise) {
+        tap_code(KC_VOLU);
+      } else {
+        tap_code(KC_VOLD);
+      }
   }
 }
 
@@ -169,11 +162,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_state_to_led(10);
             }
             break;
-        case MUTE1:
-        case MUTE2:
-            if (record->event.pressed) {
+        case KC_MUTE:
+        //case MUTE1:
+        //case MUTE2:
+            //if (record->event.pressed) {
                 rgblight_toggle();
-            }
+            //}
             break;
     }
     return true;
