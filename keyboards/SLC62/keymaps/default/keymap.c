@@ -37,28 +37,28 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = {
-        { KC_NO, KC_NO, ESC,   ENT   },
-        { KC_NO, KC_NO, MUTE1, MUTE2 },
-        { KC_A,  KC_B,  KC_C,  KC_D  },
-        { KC_E,  KC_F,  KC_G,  KC_H  }
+        { KC_NO,    KC_NO,    ESC,      ENT     },
+        { KC_NO,    KC_NO,    MUTE1,    MUTE2   },
+        { KC_A,     KC_B,     KC_C,     KC_D    },
+        { KC_E,     KC_F,     KC_G,     KC_H    }
     },
     [_RAISE] = {
-        { KC_NO, KC_NO, KC_TAB,  KC_SPC },
-        { KC_NO, KC_NO, _______, KC_I   },
-        { KC_J,  KC_K,  KC_L,    KC_M   },
-        { KC_N,  KC_O,  KC_P,    KC_R   }
+        { KC_NO,    KC_NO,    KC_TAB,   KC_SPC  },
+        { KC_NO,    KC_NO,    _______,  KC_I    },
+        { KC_J,     KC_K,     KC_L,     KC_M    },
+        { KC_N,     KC_O,     KC_P,     KC_R    }
     },
     [_LOWER] = {
-        { KC_NO, KC_NO, KC_BSPC,  KC_DEL  },
-        { KC_NO, KC_NO, KC_R,     _______ },
-        { KC_S,  KC_T,  KC_U,     KC_V    },
-        { KC_W,  KC_X,  KC_Y,     KC_Z    }
+        { KC_NO,    KC_NO,    KC_BSPC,  KC_DEL  },
+        { KC_NO,    KC_NO,    KC_R,     _______ },
+        { KC_S,     KC_T,     KC_U,     KC_V    },
+        { KC_W,     KC_X,     KC_Y,     KC_Z    }
     },
     [_NUM] = {
-        { KC_NO, KC_NO, _______, KC_NO  },
-        { KC_NO, KC_NO, KC_0,    KC_1   },
-        { KC_2,  KC_3,  KC_4,    KC_5   },
-        { KC_6,  KC_7,  KC_8,    KC_9   }
+        { KC_NO,    KC_NO,    _______,  KC_NO   },
+        { KC_NO,    KC_NO,    KC_0,     KC_1    },
+        { KC_2,     KC_3,     KC_4,     KC_5    },
+        { KC_6,     KC_7,     KC_8,     KC_9    }
     },
     [_ADJUST] = {
         { KC_NO,    KC_NO,    AU_TOG,   _______  },
@@ -114,6 +114,13 @@ void set_state_to_led(uint8_t at) {
     rgblight_set();
 }
 
+void keyboard_pre_init_user(void) {
+    rgblight_set_effect_range(0, 2);
+}
+void keyboard_post_init_user(void) {
+    set_state_to_led(5);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         //case keymaps[_BASE][3][0]:
@@ -160,6 +167,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_I:
             if (record->event.pressed) {
                 set_state_to_led(10);
+            }
+            break;
+        case MUTE1:
+        case MUTE2:
+            if (record->event.pressed) {
+                rgblight_toggle();
             }
             break;
     }
