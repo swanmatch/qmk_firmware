@@ -32,7 +32,8 @@ enum layer_names {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = {
         { KC_NO,    KC_NO,    ESC,      ENT     },
-        { KC_NO,    KC_NO,    MUTE1,    MUTE2   },
+//        { KC_NO,    KC_NO,    MUTE1,    MUTE2   },
+        { KC_NO,    KC_NO,    KC_MUTE,  KC_MUTE },
         { KC_A,     KC_B,     KC_C,     KC_D    },
         { KC_E,     KC_F,     KC_G,     KC_H    }
     },
@@ -163,11 +164,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case KC_MUTE:
-        //case MUTE1:
-        //case MUTE2:
-            //if (record->event.pressed) {
+//        case MUTE1:
+//        case MUTE2:
+            if (record->event.pressed) {
                 rgblight_toggle();
-            //}
+            }
             break;
     }
     return true;
