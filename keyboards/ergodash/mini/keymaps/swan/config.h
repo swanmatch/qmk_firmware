@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef RGBLED_NUM
 #define RGBLIGHT_ANIMATIONS
 #define RGBLED_NUM 20
-#define RGBLIGHT_HUE_STEP 10
-#define RGBLIGHT_SAT_STEP 17
-#define RGBLIGHT_VAL_STEP 17
+#define RGBLIGHT_HUE_STEP 8
+#define RGBLIGHT_SAT_STEP 5
+#define RGBLIGHT_VAL_STEP 8
+#define RGBLIGHT_EFFECT_SNAKE_LENGTH RGBLED_NUM
