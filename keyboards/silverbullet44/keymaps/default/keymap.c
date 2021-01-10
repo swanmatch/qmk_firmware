@@ -202,7 +202,7 @@ void matrix_init_user(void) {
 }
 
 #ifdef OLED_DRIVER_ENABLE
-
+#include <stdio.h>
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_180;
 }
@@ -216,11 +216,65 @@ static void render_makai_logo(void) {
     oled_write_raw_P(makai_logo, sizeof(makai_logo));
 }
 
+static void render_mod_stat(void) {
+    uint8_t modifiers = get_mods();
+    led_t led_state = host_keyboard_led_state();
+    oled_write("  ", false);
+    oled_write("CapsLock", led_state.caps_lock);
+    oled_write("  ", false);
+    oled_write_ln("NumLock", led_state.num_lock);
+    oled_write("  ", false);
+    oled_write("Ctrl", (modifiers & MOD_MASK_CTRL));
+    oled_write(" ", false);
+    oled_write("Shift", (modifiers & MOD_MASK_SHIFT));
+    oled_write(" ", false);
+    oled_write("Alt", (modifiers & MOD_MASK_ALT));
+    oled_write(" ", false);
+    oled_write("OS", (modifiers & MOD_MASK_GUI));
+}
+
+// static char* led_mode_name(uint8_t led_mode) {
+//     char buf[12];
+//     snprintf(buf, 12, "%d", led_mode);
+//     return buf*;
+// }
+
+extern rgblight_config_t rgblight_config;
+rgblight_config_t rgblight_config_bak;
+void render_led_stat(void) {
+  static char led_buf[24] = "LED state ready.\n";
+  if (rgblight_config_bak.enable != rgblight_config.enable ||
+      rgblight_config_bak.mode != rgblight_config.mode ||
+      rgblight_config_bak.hue != rgblight_config.hue ||
+      rgblight_config_bak.sat != rgblight_config.sat ||
+      rgblight_config_bak.val != rgblight_config.val
+  ) {
+    snprintf(led_buf, sizeof(led_buf) - 1, "  H:%3d S:%3d V:%3d\n",
+      rgblight_config.hue,
+      rgblight_config.sat,
+      rgblight_config.val);
+    rgblight_config_bak = rgblight_config;
+  }
+
+  oled_write("  LEDMode: ", false);
+  static char led_modes[20][12] = {
+    "Static",
+    "Breath1", "Breath2", "Breath3", "Breath4",
+    "Mood1",   "Mood2",   "Mood3",
+    "Swirl1",  "Swirl2",  "Swirl3",  "Swirl4", "Swirl5", "Swirl6",
+    "Snake1",  "Snake2",  "Snake3",  "Snake4", "Snake5", "Snake6"
+};
+  oled_write(led_modes[rgblight_config.mode-1], false);
+  oled_write("\n", false);
+  oled_write(led_buf, false);
+}
+
 static void render_status(void) {
     oled_write(" SilverBulletRequiem\n\n", false);
 
     oled_write("    ", false);
-    switch (get_highest_layer(layer_state)) {
+    layer_state_t layer = get_highest_layer(layer_state);
+    switch (layer) {
         case _QWERTY:
             oled_write("QWERTY", false);
             break;
@@ -237,20 +291,11 @@ static void render_status(void) {
             oled_write("Undefined", false);
     }
     oled_write(" Layer\n", false);
-    uint8_t modifiers = get_mods();
-    led_t led_state = host_keyboard_led_state();
-    oled_write("  ", false);
-    oled_write("CapsLock", led_state.caps_lock);
-    oled_write("  ", false);
-    oled_write_ln("NumLock", led_state.num_lock);
-    oled_write("  ", false);
-    oled_write("Ctrl", (modifiers & MOD_MASK_CTRL));
-    oled_write(" ", false);
-    oled_write("Shift", (modifiers & MOD_MASK_SHIFT));
-    oled_write(" ", false);
-    oled_write("Alt", (modifiers & MOD_MASK_ALT));
-    oled_write(" ", false);
-    oled_write("OS", (modifiers & MOD_MASK_GUI));
+    if (layer == _ADJUST) {
+        render_led_stat();
+    } else {
+        render_mod_stat();
+    }
 }
 
 static void render_logo(void) {
