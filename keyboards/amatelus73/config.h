@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    SwanMatch
 #define PRODUCT         Amatelus73
-#define DESCRIPTION     DupMatrix Big SemiErgoKeyboard
+#define DESCRIPTION     DuplexMatrix Big SemiErgoKeyboard
 
 /* key matrix size */
 #define MATRIX_ROWS 16
@@ -110,6 +110,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   #define STARTUP_SONG SONG(STARTUP_SOUND)
   #define AUDIO_CLICKY
   #define AUDIO_CLICKY_FREQ_RANDOMNESS 1.0f
+#endif
+
+#ifdef OLED_DRIVER_ENABLE
+  #define OLED_TIMEOUT 0
 #endif
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
