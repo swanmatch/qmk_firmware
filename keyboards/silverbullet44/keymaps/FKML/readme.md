@@ -1,4 +1,4 @@
-# The default keymap for silverbullet44
+# The FKML keymap for silverbullet44
 
 ```
 QWERTY
