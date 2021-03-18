@@ -16,6 +16,54 @@
 
 #include "tone_scraper.h"
 
+
+#include "i2c_master.h"
+#include "pointing_device.h"
+#include "debug.h"
+
+#include "mtch6102.h"
+
+void keyboard_post_init_kb() {
+    debug_enable = true;
+    debug_mouse  = true;
+    debug_matrix = true;
+
+    wait_ms(100);
+
+    i2c_init();
+    init_mtch6102();
+    keyboard_post_init_user();
+}
+
+void matrix_scan_kb() {
+    static int      cnt = 0;
+    static uint16_t last_read_time;
+    mtch6102_data_t mtch6102_data;
+    report_mouse_t  mouse_rep = {0};
+    bool            is_valid  = false;
+
+    // read mtch6102 data every 15ms
+    if (timer_elapsed(last_read_time) > 15) {
+        last_read_time = timer_read();
+        is_valid       = read_mtch6102(&mtch6102_data);
+    }
+
+    if (is_valid) {
+        bool send_flag = process_mtch6102(&mtch6102_data, &mouse_rep);
+
+        if (send_flag) {
+            pointing_device_set_report(mouse_rep);
+        }
+
+        if (++cnt % 10 == 0) {
+            if (debug_mouse) {
+                dprintf("0x%02X 0x%02X %d %d\n", mtch6102_data.status, mtch6102_data.gesture, mtch6102_data.x, mtch6102_data.y);
+            }
+        }
+    }
+
+    matrix_scan_user();
+}
 // Optional override functions below.
 // You can leave any or all of these undefined.
 // These are only required if you want to perform custom actions.
