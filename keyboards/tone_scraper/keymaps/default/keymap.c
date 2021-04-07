@@ -32,12 +32,12 @@ enum layer_names {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_BASE] = {
-        { KC_1, KC_2, KC_3},
-        { KC_A, KC_B, KC_C, KC_D}
+        { KC_TAB, KC_BTN3, KC_MUTE},
+        { LT(_ADJUST, KC_MPRV), KC_MPLY, KC_MNXT, KC_BTN2}
     },
     [_ADJUST] = {
-        { KC_1, KC_2, KC_3},
-        { KC_A, KC_B, KC_C, KC_D}
+        { _______, _______, _______},
+        { _______, RGB_MOD, RGB_RMOD, RGB_TOG}
     }
 };
 
@@ -54,16 +54,16 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 break;
             case 1: /* center encoder */
                 if (clockwise) {
-                    tap_code(KC_T);
+                    tap_code(KC_MS_WH_UP);
                 } else {
-                    tap_code(KC_D);
+                    tap_code(KC_MS_WH_DOWN);
                 }
                 break;
             case 2: /* right encoder */
                 if (clockwise) {
-                    tap_code(KC_X);
+                    tap_code(KC_VOLU);
                 } else {
-                    tap_code(KC_Y);
+                    tap_code(KC_VOLD);
                 }
                 break;
         }
@@ -72,23 +72,23 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         switch (index) {
             case 0: /* left encoder */
                 if (clockwise) {
-                    tap_code(KC_VOLU);
+                    rgblight_increase_hue_noeeprom();
                 } else {
-                    tap_code(KC_VOLD);
+                    rgblight_decrease_hue_noeeprom();
                 }
                 break;
             case 1: /* center encoder */
                 if (clockwise) {
-                    tap_code(KC_T);
+                    rgblight_increase_sat_noeeprom();
                 } else {
-                    tap_code(KC_D);
+                    rgblight_decrease_sat_noeeprom();
                 }
                 break;
             case 2: /* right encoder */
                 if (clockwise) {
-                    tap_code(KC_X);
+                    rgblight_increase_val_noeeprom();
                 } else {
-                    tap_code(KC_Y);
+                    rgblight_decrease_val_noeeprom();
                 }
                 break;
         }
