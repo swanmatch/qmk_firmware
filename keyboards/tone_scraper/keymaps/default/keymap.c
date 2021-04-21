@@ -47,9 +47,9 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         switch (index) {
             case 0: /* left encoder */
                 if (clockwise) {
-                    tap_code(KC_RIGHT);
+                    tap_code(KC_TAB);
                 } else {
-                    tap_code(KC_LEFT);
+                    tap_code16(LSFT(KC_TAB));
                 }
                 break;
             case 1: /* center encoder */
