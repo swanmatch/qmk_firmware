@@ -27,7 +27,6 @@ void matrix_init_kb(void) {
 	matrix_init_user();
 };
 
-<<<<<<< HEAD
 
 #ifdef RGB_MATRIX_ENABLE
 
@@ -100,7 +99,6 @@ led_config_t g_led_config = { {
 } };
 #endif
 #endif
-=======
 void keyboard_post_init_kb(void) {
 #if defined(DEBUG_MATRIX_SCAN_RATE)
     debug_enable = true;
@@ -113,4 +111,3 @@ void matrix_slave_scan_user(void) {
     matrix_scan_user();
 }
 #endif
->>>>>>> 8f69983c58e7c8025d55ccdb31bcf570158f5433
