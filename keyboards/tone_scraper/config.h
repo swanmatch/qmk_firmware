@@ -89,6 +89,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //   #define RGBLIGHT_EFFECT_BREATHE_MAX    255   // 0 to 255
 #endif
 
+#ifdef AUDIO_ENABLE
+  #define B5_AUDIO
+  #define STARTUP_SONG SONG(STARTUP_SOUND)
+  #define AUDIO_CLICKY
+  #define AUDIO_CLICKY_FREQ_RANDOMNESS 1.0f
+#endif
+
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
 

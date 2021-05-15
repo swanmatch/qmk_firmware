@@ -36,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         { LT(_ADJUST, KC_MPRV), KC_MPLY, KC_MNXT, KC_BTN2}
     },
     [_ADJUST] = {
-        { _______, _______, _______},
+        { _______, _______, AU_TOG},
         { _______, RGB_MOD, RGB_RMOD, RGB_TOG}
     }
 };
