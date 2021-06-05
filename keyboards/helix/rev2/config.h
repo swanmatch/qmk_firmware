@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT         Helix Beta
 
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 100
+#define TAPPING_TERM 200
 
 /* Use I2C or Serial */
 #define USE_SERIAL
@@ -97,7 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   #if MATRIX_ROWS == 8 // HELIX_ROWS == 4
     #define RGBLED_NUM 25
   #else
-    #define RGBLED_NUM 32
+    #define RGBLED_NUM 74
   #endif
 #else
   #define RGBLED_NUM 6

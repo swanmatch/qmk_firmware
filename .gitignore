@@ -66,6 +66,13 @@ doxygen/
 *.gif
 *.jpg
 
+# netbeans
+nbproject/*
+keyboards/*/nbproject/*
+
+# Do not ignore MiniDox left/right hand eeprom files
+!keyboards/minidox/*.eep
+
 # things travis sees
 secrets.tar
 id_rsa_*

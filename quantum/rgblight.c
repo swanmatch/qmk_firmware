@@ -1159,7 +1159,7 @@ void rgblight_effect_snake(animation_status_t *anim) {
                 k = k + rgblight_ranges.effect_num_leds;
             }
             if (i == k) {
-                sethsv(rgblight_config.hue, rgblight_config.sat, (uint8_t)(rgblight_config.val * (RGBLIGHT_EFFECT_SNAKE_LENGTH - j) / RGBLIGHT_EFFECT_SNAKE_LENGTH), ledp);
+                sethsv(360 / RGBLIGHT_EFFECT_SNAKE_LENGTH * j + rgblight_config.hue, rgblight_config.sat, (uint8_t)(rgblight_config.val * (RGBLIGHT_EFFECT_SNAKE_LENGTH - j) / RGBLIGHT_EFFECT_SNAKE_LENGTH), ledp);
             }
         }
     }

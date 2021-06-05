@@ -114,6 +114,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #ifdef LAYER_FN
     [TD_LSFT_FN] = ACTION_TAP_DANCE_MOD_LAYER(KC_LSFT, L_FN),
     [TD_RCTL_FN] = ACTION_TAP_DANCE_MOD_LAYER(KC_RCTL, L_FN),
+
     [TD_FN_RCTL] = ACTION_TAP_DANCE_LAYER_MOD(L_FN, KC_RCTL),
 #endif
 };
