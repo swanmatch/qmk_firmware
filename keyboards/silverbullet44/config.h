@@ -129,6 +129,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   #define MOUSEKEY_TIME_TO_MAX 60
 #endif
 
+#ifdef OLED_DRIVER_ENABLE
+  #define OLED_TIMEOUT 0
+  #define OLED_DISPLAY_128X64
+#endif
 /* define if matrix has ghost (lacks anti-ghosting diodes) */
 //#define MATRIX_HAS_GHOST
 
