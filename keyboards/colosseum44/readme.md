@@ -1,22 +1,19 @@
-Colosseum44
-===
+# colosseum44
 
-![Colosseum44](https://booth.pximg.net/026065e4-61c6-4c70-90b9-2f87d9b852bc/i/1148045/ef186237-0462-4f83-9c78-b5519a24fbdc_base_resized.jpg)
+![colosseum44](imgur.com image replace me!)
 
-A 3D Fullcolor Backlight split keyboard!
+*A short description of the keyboard/project*
 
-Keyboard Maintainer: [SwanMatch](https://github.com/swanmatch/) [@swan_match](https://twitter.com/swan_match)  
-Hardware Supported: CherryMxLEDBitBoard
-Hardware Availability: [PCB Data](https://github.com/swanmatch/MxLEDBitPCB), [Lanケーブルは100mしか繋がない](http://swan-match.hatenablog.com/)
+* Keyboard Maintainer: [swanmatch](https://github.com/yourusername)
+* Hardware Supported: *The PCBs, controllers supported*
+* Hardware Availability: *Links to where you can find this hardware*
 
 Make example for this keyboard (after setting up your build environment):
 
-    make colosseum44:salicylic
+    make colosseum44:default
 
-## Special Thanks
-First builder: [@Salicylic_acid3](https://twitter.com/Salicylic_acid3)  
-Photo: [@Salicylic_acid3](https://twitter.com/Salicylic_acid3)  
-Firmware: [@Salicylic_acid3](https://twitter.com/Salicylic_acid3)
+Flashing example for this keyboard:
 
+    make colosseum44:default:flash
 
-See [build environment setup](https://docs.qmk.fm/build_environment_setup.html) then the [make instructions](https://docs.qmk.fm/make_instructions.html) for more information.
+See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
