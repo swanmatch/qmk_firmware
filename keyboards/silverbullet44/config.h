@@ -93,9 +93,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_EFFECT_SNAKE
 //  #define RGBLIGHT_EFFECT_KNIGHT
 //  #define RGBLIGHT_EFFECT_CHRISTMAS
-//  #define RGBLIGHT_EFFECT_STATIC_GRADIENT
+    #define RGBLIGHT_EFFECT_STATIC_GRADIENT
 //  #define RGBLIGHT_EFFECT_RGB_TEST
-//  #define RGBLIGHT_EFFECT_ALTERNATING
+    #define RGBLIGHT_EFFECT_ALTERNATING
 /*== customize breathing effect ==*/
   /*==== (DEFAULT) use fixed table instead of exp() and sin() ====*/
     #define RGBLIGHT_BREATHE_TABLE_SIZE 256      // 256(default) or 128 or 64
@@ -129,7 +129,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #ifdef OLED_DRIVER_ENABLE
-  #define OLED_TIMEOUT 0
+  #define OLED_TIMEOUT 60000
   #define OLED_DISPLAY_128X64
 #endif
 /* define if matrix has ghost (lacks anti-ghosting diodes) */

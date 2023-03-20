@@ -18,6 +18,9 @@
 #include "report.h"
 #include "mtch6102.h"
 #include "i2c_master.h"
+#ifdef CONSOLE_ENABLE
+  #include <print.h>
+#endif
 
 #ifndef MTCH6102_X_DIR
 #    define MTCH6102_X_DIR -1
@@ -86,7 +89,7 @@ bool read_mtch6102(mtch6102_data_t* const data) {
     mtch6102_reg_t reg;
 
     if (i2c_readReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_STAT, reg.dat, sizeof(mtch6102_reg_t), I2C_TIMEOUT)) {
-        print("regread error\n");
+        uprintf("regread error\n");
         return false;
     }
 
@@ -108,8 +111,8 @@ bool process_mtch6102(mtch6102_data_t const* const data, report_mouse_t* const r
     if (touch_state && (data->status & TOUCH)) {
         x_dif        = data->x - x_buf;
         y_dif        = data->y - y_buf;
-        rep_mouse->x = x_dif * MTCH6102_X_DIR;
-        rep_mouse->y = -1 * (y_dif * MTCH6102_Y_DIR);
+        rep_mouse->x = y_dif * MTCH6102_Y_DIR;
+        rep_mouse->y = -(x_dif * MTCH6102_X_DIR);
         send_flag    = true;
     }
 
