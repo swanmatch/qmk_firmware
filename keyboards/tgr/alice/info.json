@@ -1,12 +1,26 @@
 {
-  "keyboard_name": "TGR Alice",
+  "keyboard_name": "Alice",
+  "manufacturer": "TGR",
   "url": "",
   "maintainer": "Felipe Coury",
-  "width": 17.75,
-  "height": 5,
+  "usb": {
+    "vid": "0x20A0",
+    "pid": "0x422E",
+    "device_version": "2.0.0"
+  },
+  "backlight": {
+    "pin": "D4"
+  },
+  "indicators": {
+    "caps_lock": "D1",
+    "num_lock": "D0",
+    "scroll_lock": "D6"
+  },
+  "processor": "atmega32a",
+  "bootloader": "bootloadhid",
+  "community_layouts": ["alice_split_bs"],
   "layouts": {
     "LAYOUT_alice_split_bs": {
-      "key_count": 66,
       "layout": [
         {"label":"K63", "x":0, "y":0},
         {"label":"K00", "x":1.25, "y":0},

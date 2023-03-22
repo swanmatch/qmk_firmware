@@ -1,9 +1,19 @@
 {
   "keyboard_name": "Rart45",
+  "manufacturer": "Alabahuy",
   "url": "",
   "maintainer": "Alabahuy",
-  "width": 13,
-  "height": 5,
+  "usb": {
+    "vid": "0x414C",
+    "pid": "0x0045",
+    "device_version": "0.0.1"
+  },
+  "indicators": {
+    "caps_lock": "D5",
+    "on_state": 0
+  },
+  "processor": "atmega328p",
+  "bootloader": "usbasploader",
   "layouts": {
     "LAYOUT_all": {
       "layout": [

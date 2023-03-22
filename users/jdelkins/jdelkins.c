@@ -45,7 +45,7 @@ void send_secret_string(uint8_t n) {
 
 // To activate SINGLE_HOLD, you will need to hold for 200ms first.
 // This tap dance favors keys that are used frequently in typing like 'f'
-int cur_dance(qk_tap_dance_state_t *state) {
+int cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         // If count = 1, and it has been interrupted - it doesn't matter if it
         // is pressed or not: Send SINGLE_TAP
@@ -84,7 +84,7 @@ int cur_dance(qk_tap_dance_state_t *state) {
 
 // This works well if you want this key to work as a "fast modifier". It favors
 // being held over being tapped.
-int hold_cur_dance(qk_tap_dance_state_t *state) {
+int hold_cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted) {
             if (!state->pressed)
@@ -193,7 +193,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KB_MAKE:
             if (!get_mods()) {
                 if (!record->event.pressed)
+#ifdef NO_SECRETS
+                    SEND_STRING("make NO_SECRETS=1 " QMK_KEYBOARD ":" QMK_KEYMAP SS_TAP(X_ENTER));
+#else
                     SEND_STRING("make " QMK_KEYBOARD ":" QMK_KEYMAP SS_TAP(X_ENTER));
+#endif
                 return false;
             }
             break;
@@ -201,10 +205,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KB_VRSN:
             if (!get_mods()) {
                 if (!record->event.pressed) {
+#ifdef DO_SECRETS
+# define SECRET_MSG " (with secrets)"
+#else
+# define SECRET_MSG
+#endif
                     if (user_config.system_mac) {
-                        SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " (mac mode)");
+                        SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " (mac mode)" SECRET_MSG);
                     } else {
-                        SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " (non-mac mode)");
+                        SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " (non-mac mode)" SECRET_MSG);
                     }
                 }
                 return false;
@@ -227,7 +236,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KB_FLSH:
             if (!get_mods()) {
                 if (!record->event.pressed) {
+#ifdef NO_SECRETS
+                    SEND_STRING("make NO_SECRETS=1 " QMK_KEYBOARD ":" QMK_KEYMAP ":flash\n");
+#else
                     SEND_STRING("make " QMK_KEYBOARD ":" QMK_KEYMAP ":flash\n");
+#endif
                     reset_keyboard();
                 }
                 return false;
@@ -235,7 +248,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
 #ifdef DO_SECRETS
-        case KC_SECRET_1 ... KC_SECRET_5: // Secrets!  Externally defined strings, not stored in repo
+        case KC_SECRET_1 ... KC_SECRET_6: // Secrets!  Externally defined strings, not stored in repo
             if (!record->event.pressed) {
                 clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
                 send_secret_string(keycode - KC_SECRET_1);

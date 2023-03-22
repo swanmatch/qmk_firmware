@@ -1,9 +1,18 @@
 {
     "keyboard_name": "Lunakey Mini",
+    "manufacturer": "yoichiro",
     "url": "",
     "maintainer": "qmk",
-    "width": 14.75,
-    "height": 5,
+    "usb": {
+        "vid": "0x5954",
+        "pid": "0x0001",
+        "device_version": "0.0.1"
+    },
+    "split": {
+        "soft_serial_pin": "D2"
+    },
+    "processor": "atmega32u4",
+    "bootloader": "atmel-dfu",
     "layouts": {
         "LAYOUT_split_3x6_4": {
             "layout": [

@@ -1,12 +1,22 @@
 {
     "keyboard_name": "XMMX",
+    "manufacturer": "farmakon",
     "url": "",
     "maintainer": "qmk",
-    "width": 18.25,
-    "height": 6.5,
+    "usb": {
+        "vid": "0xFEED",
+        "pid": "0x6776",
+        "device_version": "0.0.1"
+    },
+    "indicators": {
+        "caps_lock": "B6",
+        "scroll_lock": "B5",
+        "on_state": 0
+    },
+    "processor": "atmega32u4",
+    "bootloader": "atmel-dfu",
     "layouts": {
         "LAYOUT_all": {
-            "key_count": 96,
             "layout": [
                 {"label":"Esc", "x":0, "y":0}, 
                 {"label":"F1", "x":2, "y":0}, 
@@ -107,7 +117,6 @@
             ]
         },
         "LAYOUT_tkl_ansi": {
-            "key_count": 87,
             "layout": [
                 {"label":"Esc", "x":0, "y":0}, 
                 {"label":"F1", "x":2, "y":0}, 
@@ -199,7 +208,6 @@
             ]
         },
         "LAYOUT_tkl_ansi_wkl": {
-            "key_count": 84,
             "layout": [
                 {"label":"Esc", "x":0, "y":0}, 
                 {"label":"F1", "x":2, "y":0}, 
@@ -288,7 +296,6 @@
             ]
         },
         "LAYOUT_tkl_iso": {
-            "key_count": 88,
             "layout": [
                 {"label":"Esc", "x":0, "y":0}, 
                 {"label":"F1", "x":2, "y":0}, 
@@ -381,7 +388,6 @@
             ]
         },
         "LAYOUT_tkl_iso_wkl": {
-            "key_count": 85,
             "layout": [
                 {"label":"Esc", "x":0, "y":0}, 
                 {"label":"F1", "x":2, "y":0}, 
@@ -472,4 +478,3 @@
         }
     }
 }
-
