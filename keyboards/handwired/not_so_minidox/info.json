@@ -1,12 +1,20 @@
 {
   "keyboard_name": "Not So MiniDox",
+  "manufacturer": "mtdjr",
   "url": "",
   "maintainer": "qmk",
-  "width": 14,
-  "height": 5.75,
+  "usb": {
+    "vid": "0xFEED",
+    "pid": "0x3060",
+    "device_version": "0.0.1"
+  },
+  "split": {
+    "soft_serial_pin": "D0"
+  },
+  "processor": "atmega32u4",
+  "bootloader": "caterina",
   "layouts": {
     "LAYOUT": {
-      "key_count": 42,
       "layout": [
         {"x":0, "y":0.375},
         {"x":1, "y":0.25},

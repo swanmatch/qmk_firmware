@@ -7,7 +7,7 @@ enum layer {
     _ADJUST,
 };
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 #include <stdio.h>
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_180;
@@ -118,7 +118,7 @@ static void render_logo(void) {
     oled_write_raw_P(logo, sizeof(logo));
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     if (is_keyboard_master()) {
         render_makai_logo();
         oled_set_cursor(0, 3);
@@ -126,5 +126,6 @@ void oled_task_user(void) {
     } else {
         render_logo();
     }
+    return true;
 }
 #endif

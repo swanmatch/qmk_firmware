@@ -1,9 +1,17 @@
 {
-    "keyboard_name": "hannah60rgb",
+    "keyboard_name": "Hannah60 RGB",
+    "manufacturer": "Team.Mechlovin",
     "url": "",
-    "maintainer": "Team Mechlovin'",
-    "width": 15,
-    "height": 5,
+    "maintainer": "mechlovin",
+    "usb": {
+        "vid": "0x4D4C",
+        "pid": "0x6001",
+        "device_version": "0.0.1"
+    },
+    "processor": "STM32F303",
+    "bootloader": "stm32-dfu",
+    "board": "QMK_PROTON_C",
+    "community_layouts": ["60_ansi", "60_iso"],
     "layouts": {
         "LAYOUT_all": {
             "layout": [

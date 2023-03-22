@@ -1,12 +1,21 @@
 {
     "keyboard_name": "hbcp",
+    "manufacturer": "hineybush",
     "url": "",
     "maintainer": "hineybush",
-    "width": 19.5,
-    "height": 6.25,
+    "usb": {
+        "vid": "0x04D8",
+        "pid": "0xECE8",
+        "device_version": "0.0.1"
+    },
+    "backlight": {
+        "pin": "B7",
+        "breathing": true
+    },
+    "processor": "at90usb1286",
+    "bootloader": "atmel-dfu",
     "layouts": {
         "LAYOUT_all": {
-            "key_count": 103,
             "layout": [
                 {"label":"Esc (K000)", "x":0, "y":0},
                 {"label":"F1 (K001)", "x":1.25, "y":0},
@@ -114,7 +123,6 @@
             ]
         },
         "LAYOUT_wkl": {
-            "key_count": 97,
             "layout": [
                 {"label":"Esc (K000)", "x":0, "y":0},
                 {"label":"F1 (K001)", "x":1.25, "y":0},

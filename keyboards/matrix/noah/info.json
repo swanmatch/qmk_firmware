@@ -1,12 +1,16 @@
 {
   "keyboard_name": "NOAH",
+  "manufacturer": "Matrix",
   "url": "",
   "maintainer": "astro",
-  "width": 16,
-  "height": 5,
+  "usb": {
+    "vid": "0x4D58",
+    "pid": "0x0065",
+    "device_version": "0.0.1"
+  },
+  "community_layouts": ["65_iso_blocker"],
   "layouts": {
     "LAYOUT_default": {
-      "key_count": 68,
       "layout": [
         {
           "label": "~",
@@ -362,7 +366,6 @@
       ]
     },
     "LAYOUT_default_splitspace": {
-      "key_count": 70,
       "layout": [
         {
           "label": "~",
@@ -729,7 +732,6 @@
       ]
     },
     "LAYOUT_wkl": {
-      "key_count": 67,
       "layout": [
         {
           "label": "~",
@@ -1078,7 +1080,6 @@
       ]
     },
     "LAYOUT_iso": {
-      "key_count": 67,
       "layout": [
         {
           "label": "~",

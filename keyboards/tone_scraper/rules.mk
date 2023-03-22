@@ -32,6 +32,7 @@ FAUXCLICKY_ENABLE = no      # Use buzzer to emulate clicky switches
 HD44780_ENABLE = no         # Enable support for HD44780 based LCDs
 ENCODER_ENABLE = yes
 POINTING_DEVICE_ENABLE = yes
+POINTING_DEVICE_DRIVER = custom
 LTO_ENABLE = yes
 
 SRC += mtch6102.c i2c_master.c
