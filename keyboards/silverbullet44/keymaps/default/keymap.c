@@ -22,7 +22,7 @@
 //};
 enum layer {
     _QWERTY,
-    _CURSOL,
+    _CURSOR,
     _CALC,
     _ADJUST,
 };
@@ -34,7 +34,7 @@ enum custom_keycodes {
   SALTAB
 };
 #define CALC     LT(_CALC,   KC_ESC)
-#define CUSL     LT(_CURSOL, KC_TAB)
+#define CRSR     LT(_CURSOR, KC_TAB)
 #define ALT_F5   LALT_T(KC_F5)
 #define SFT_SPC  LSFT_T(KC_SPC)
 #define CTRL_ENT LCTL_T(KC_ENT)
@@ -58,10 +58,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,   KC_Q, KC_W, KC_E, KC_R, KC_T,                KC_Y, KC_U, KC_I,    KC_O,   KC_P,    KC_EQL,
     KC_LSFT,  KC_A, KC_S, KC_D, KC_F, KC_G,                KC_H, KC_J, KC_K,    KC_L,   KC_SCLN, KC_QUOT,
     KC_LCTL,  KC_Z, KC_X, KC_C, KC_V, KC_B,                KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-                  ALT_F5, KC_BSPC, SFT_SPC, CALC,    CUSL, CTRL_ENT, KC_DEL, GUI_F12
+                  ALT_F5, KC_BSPC, SFT_SPC, CALC,    CRSR, CTRL_ENT, KC_DEL, GUI_F12
   ),
 
-/* Cursol
+/* Cursor
  * ,-----------------------------------------.                                  ,-----------------------------------------.
  * |      |  F1  |  F2  | PgUp |  F4  |  F5  |                                  |  F6  |  F7  |  Up  |  F9  | F10  |Reset |
  * |------+------+------+------+------+------|                                  |------+------+------+------+------+------|
@@ -73,14 +73,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                          |      |      |/       /       /       \       \      \ |      |      |
  *                          `-----------------------------'         '-----------------------------'
  */
-  [_CURSOL] = LAYOUT(
+  [_CURSOR] = LAYOUT(
     _______, KC_F1,   KC_F2,      KC_PGUP, KC_F4,      KC_F5,                              KC_F6,   KC_F7,        KC_UP,   KC_F9,        KC_F10,  QK_RBT,
     _______, KC_TILD, KC_HOME,    KC_PGDN, KC_END,     KC_LPRN,                            KC_RPRN, KC_LEFT,      KC_DOWN, KC_RGHT,      KC_PIPE, KC_F11,
     _______, KC_GRV,  C(KC_LEFT), KC_F3,   C(KC_RGHT), S(ALTAB),                           ALTAB,   LCA(KC_LEFT), KC_F8,   LCA(KC_RGHT), KC_BSLS, RGBRST,
                                   _______,    _______, C(KC_SPC), MO(_ADJUST),    _______, _______, _______, _______
   ),
 
-/* Calculater
+/* Calculator
  * ,-----------------------------------------.                                  ,-----------------------------------------.
  * |      |  1   |  2   |  3   |  4   |  5   |                                  |  6   |  7   |  8   |  9   |  0   |      |
  * |------+------+------+------+------+------|                                  |------+------+------+------+------+------|
@@ -123,10 +123,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef RGBLIGHT_ENABLE
 // Following line allows macro to read current RGB settings
 extern rgblight_config_t rgblight_config;
+int  RGB_current_mode;
 #endif
 
-int  RGB_current_mode;
-bool alt_pressed = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -147,12 +146,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code16(keycode);
                     register_code(KC_LSFT);
                 }
-                /*  } else if (keyboard_report->mods & MOD_BIT(KC_RSFT)) {
-                    if (record->event.pressed) {
-                      unregister_code(KC_RSFT);
-                      tap_code16(keycode);
-                      register_code(KC_RSFT);
-                    } */
             } else {
                 if (record->event.pressed) {
                     tap_code16(S(keycode));
@@ -169,34 +162,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-        case SALTAB:
-        case ALTAB:
-            if (record->event.pressed) {
-                if (!alt_pressed) {
-                    alt_pressed = true;
-                    register_code(KC_LALT);
-                }
-                if (keycode == SALTAB) {
-                    register_code(KC_LSFT);
-                }
-                register_code(KC_TAB);
-            } else {
-                unregister_code(KC_TAB);
-                if (keycode == SALTAB) {
-                    unregister_code(KC_LSFT);
-                }
-            }
-            return false;
-            break;
-        default:
-            if (alt_pressed) {
-                alt_pressed = false;
-                unregister_code(KC_LALT);
-                if (record->event.pressed) {
-                    return false;
-                }
-            }
-            break;
 #endif
     }
     return true;
@@ -209,7 +174,7 @@ void matrix_init_user(void) {
 }
 
 
-// #ifdef TOUCH_ENABLE
+#ifdef TOUCH_ENABLE
 
 #include "mtch6102.h"
 #include "pointing_device.h"
@@ -232,4 +197,4 @@ void matrix_scan_user() {
     }
 }
 
-// #endif
+#endif

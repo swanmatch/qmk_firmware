@@ -2,7 +2,7 @@
 
 enum layer {
     _QWERTY,
-    _CURSOL,
+    _CURSOR,
     _CALC,
     _ADJUST,
 };
@@ -63,9 +63,8 @@ void render_led_stat(void) {
   }
 
   oled_write("  LEDMode: ", false);
-  static char led_modes[20][12] = {
+  static char led_modes[16][7] = {
     "Static",
-    "Breath1", "Breath2", "Breath3", "Breath4",
     "Mood1",   "Mood2",   "Mood3",
     "Swirl1",  "Swirl2",  "Swirl3",  "Swirl4", "Swirl5", "Swirl6",
     "Snake1",  "Snake2",  "Snake3",  "Snake4", "Snake5", "Snake6"
@@ -84,8 +83,8 @@ static void render_status(void) {
         case _QWERTY:
             oled_write("QWERTY", false);
             break;
-        case _CURSOL:
-            oled_write("Cursol", false);
+        case _CURSOR:
+            oled_write("Cursor", false);
             break;
         case _CALC:
             oled_write("Number", false);
