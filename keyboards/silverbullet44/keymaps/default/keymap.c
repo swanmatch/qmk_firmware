@@ -138,7 +138,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 #endif
-#ifndef VIA_ENABLE
         case KC_SCLN:
             if (keyboard_report->mods & MOD_BIT(KC_LSFT)) {
                 if (record->event.pressed) {
@@ -162,7 +161,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-#endif
     }
     return true;
 }
