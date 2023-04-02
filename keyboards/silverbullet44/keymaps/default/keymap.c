@@ -170,29 +170,3 @@ void matrix_init_user(void) {
     RGB_current_mode = rgblight_config.mode;
 #endif
 }
-
-
-#ifdef TOUCH_ENABLE
-
-#include "mtch6102.h"
-#include "pointing_device.h"
-void matrix_scan_user() {
-
-    // Change cursor movement to scroll movement if layer is 1
-    if (layer_state_is(1)) {
-        report_mouse_t mouse_rep = pointing_device_get_report();
-        if (mouse_rep.x != 0) {
-            mouse_rep.h = mouse_rep.x > 0 ? 1 : -1;
-            mouse_rep.x = 0;
-        }
-
-        if (mouse_rep.y != 0) {
-            mouse_rep.v = mouse_rep.y > 0 ? 1 : -1;
-            mouse_rep.y = 0;
-        }
-
-        pointing_device_set_report(mouse_rep);
-    }
-}
-
-#endif

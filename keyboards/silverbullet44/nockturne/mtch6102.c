@@ -68,9 +68,11 @@ uint16_t check_mtch6102() {
     return ((uint16_t)dat[0] << 8) | dat[1];
 }
 
-int init_mtch6102(void) {
+void pointing_device_driver_init(void) {
     uint8_t dat = 0b0011;
     uint8_t res = 0;
+
+    i2c_init();
     res |= i2c_writeReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_MODE, &dat, 1, I2C_TIMEOUT);
 
     uint8_t default_config[] = {
@@ -82,7 +84,82 @@ int init_mtch6102(void) {
     dat = 0x20;
     res |= i2c_writeReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_CMD, &dat, 1, I2C_TIMEOUT);
 
-    return res;
+    // set HOLD time
+    dat = 0x10;
+    res |= i2c_writeReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_HOLD_TIME, &dat, 1, I2C_TIMEOUT);
+}
+
+report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
+    mtch6102_data_t mtch6102_data;
+    bool            is_valid = read_mtch6102(&mtch6102_data);
+
+    if (is_valid) {
+        bool send_flag = process_mtch6102(&mtch6102_data, &mouse_report);
+        if (!send_flag) {
+            report_mouse_t  mouse_rep = {0};
+            return mouse_rep;
+        }
+    }
+
+    return mouse_report;
+}
+
+
+report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
+    // right_report.h = left_report.x;
+    // right_report.v = left_report.y;
+    // left_report.x = 0;
+    // left_report.y = 0;
+    // if (left_report.y > 0 && right_report.y > 0) {
+    //     // SWIPE UP
+    //     right_report.v = 1;
+    //     left_report.v = 1;
+    //     right_report.y = 0;
+    //     left_report.y = 0;
+    // } else if (left_report.y < 0 && right_report.y < 0 ) {
+    //     // SWIPE DOWN
+    //     right_report.v = -1;
+    //     left_report.v = -1;
+    //     right_report.y = 0;
+    //     left_report.y = 0;
+    // }
+    // if ( left_report.x > 0 && right_report.x > 0) {
+    //     // SWIPE RIGHT
+    //     right_report.h = 1;
+    //     left_report.h = 1;
+    //     right_report.x = 0;
+    //     left_report.x = 0;
+    // } else if ( left_report.x < 0 && right_report.x < 0) {
+    //     // SWIPE RIGHT
+    //     right_report.h = -1;
+    //     left_report.h = -1;
+    //     right_report.x = 0;
+    //     left_report.x = 0;
+    // } else if ( left_report.x > 0 && right_report.x < 0) {
+    //     // PINCH IN
+    //     tap_code16(LCTL(KC_MINS));
+    //     right_report.x = 0;
+    //     left_report.x = 0;
+    // } else if ( left_report.x < 0 && right_report.x > 0) {
+    //     // PINCH OUT
+    //     tap_code16(LCTL(KC_EQL));
+    //     right_report.x = 0;
+    //     left_report.x = 0;
+    // }
+    // uprintf("pointing_device_task_combined_user\n");
+    if (left_report.x == 0 || left_report.y == 0) {
+        if (right_report.x != 0 && right_report.y != 0) {
+            uprintf("right: x: %d, y: %d\n", right_report.x, right_report.y);
+        }
+        return right_report;
+    }
+    if (right_report.x == 0 || right_report.y == 0) {
+        uprintf("left: x: %d, y: %d\n", left_report.x, left_report.y);
+        return left_report;
+    }
+    uprintf("left: x: %d, y: %d | right: x: %d, y: %d\n ", left_report.x, left_report.y, right_report.x, right_report.y);
+    // uprintf("\n", right_report.x, right_report.y);
+    return pointing_device_combine_reports(left_report, right_report);
 }
 
 bool read_mtch6102(mtch6102_data_t* const data) {
@@ -118,6 +195,10 @@ bool process_mtch6102(mtch6102_data_t const* const data, report_mouse_t* const r
 
     if ((data->status & GESTURE) && (data->gesture == GES_TAP || data->gesture == GES_DOUBLE_TAP)) {
         rep_mouse->buttons = 1;
+        release_button     = true;
+        send_flag          = true;
+    } else if ((data->status & GESTURE) && (data->gesture == GES_HOLD)) {
+        rep_mouse->buttons = 2;
         release_button     = true;
         send_flag          = true;
     } else if (release_button) {

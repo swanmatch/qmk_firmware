@@ -33,9 +33,10 @@ typedef enum {
 #define MTCH6102_REG_MODE 0x05
 #define MTCH6102_REG_CFG_START 0x20
 #define MTCH6102_REG_CFG_END 0x43
+#define MTCH6102_REG_HOLD_TIME 0x3C
 #define MTCH6102_CFG_LEN (MTCH6102_REG_CFG_END - MTCH6102_REG_CFG_START + 1)
 
-typedef enum { GES_TAP = 0x10, GES_DOUBLE_TAP = 0x20 } MTCH6102_GESTURE_CODE;
+typedef enum { GES_TAP = 0x10, GES_HOLD = 0x11, GES_DOUBLE_TAP = 0x20 } MTCH6102_GESTURE_CODE;
 
 void pointing_device_set_button(uint8_t btn);
 void pointing_device_clear_button(uint8_t btn);
