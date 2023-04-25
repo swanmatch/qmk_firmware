@@ -39,6 +39,7 @@ enum custom_keycodes {
 #define SFT_SPC  LSFT_T(KC_SPC)
 #define CTRL_ENT LCTL_T(KC_ENT)
 #define GUI_F12  GUI_T(KC_F12)
+#define ALT_BSPC LALT_T(KC_BSPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -58,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,   KC_Q, KC_W, KC_E, KC_R, KC_T,                KC_Y, KC_U, KC_I,    KC_O,   KC_P,    KC_EQL,
     KC_LSFT,  KC_A, KC_S, KC_D, KC_F, KC_G,                KC_H, KC_J, KC_K,    KC_L,   KC_SCLN, KC_QUOT,
     KC_LCTL,  KC_Z, KC_X, KC_C, KC_V, KC_B,                KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-                  ALT_F5, KC_BSPC, SFT_SPC, CALC,    CRSR, CTRL_ENT, KC_DEL, GUI_F12
+                  ALT_F5, ALT_BSPC, SFT_SPC, CALC,    CRSR, CTRL_ENT, KC_DEL, GUI_F12
   ),
 
 /* Cursor
@@ -138,6 +139,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 #endif
+#ifndef VIA_ENABLE
         case KC_SCLN:
             if (keyboard_report->mods & MOD_BIT(KC_LSFT)) {
                 if (record->event.pressed) {
@@ -161,6 +163,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
+#endif
     }
     return true;
 }
@@ -170,3 +173,29 @@ void matrix_init_user(void) {
     RGB_current_mode = rgblight_config.mode;
 #endif
 }
+
+
+#ifdef TOUCH_ENABLE
+
+#include "mtch6102.h"
+#include "pointing_device.h"
+void matrix_scan_user() {
+
+    // Change cursor movement to scroll movement if layer is _CURSOL
+    if (layer_state_is(_CURSOR)) {
+        report_mouse_t mouse_rep = pointing_device_get_report();
+        if (mouse_rep.x != 0) {
+            mouse_rep.h = mouse_rep.x > 0 ? 1 : -1;
+            mouse_rep.x = 0;
+        }
+
+        if (mouse_rep.y != 0) {
+            mouse_rep.v = mouse_rep.y > 0 ? 1 : -1;
+            mouse_rep.y = 0;
+        }
+
+        pointing_device_set_report(mouse_rep);
+    }
+}
+
+#endif
