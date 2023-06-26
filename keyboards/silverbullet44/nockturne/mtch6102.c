@@ -18,16 +18,9 @@
 #include "report.h"
 #include "mtch6102.h"
 #include "i2c_master.h"
+#include <stdint.h>
 #ifdef CONSOLE_ENABLE
   #include <print.h>
-#endif
-
-#ifndef MTCH6102_X_DIR
-#    define MTCH6102_X_DIR -1
-#endif
-
-#ifndef MTCH6102_Y_DIR
-#    define MTCH6102_Y_DIR 1
 #endif
 
 #ifndef I2C_TIMEOUT
@@ -37,19 +30,6 @@
 #ifndef I2C_7BIT_ADDR
 #    define I2C_7BIT_ADDR(addr) (addr << 1)
 #endif
-
-static uint8_t pointing_device_button = 0;
-static bool    send_flag              = false;
-
-void pointing_device_set_button(uint8_t btn) {
-    pointing_device_button |= btn;
-    send_flag = true;
-}
-
-void pointing_device_clear_button(uint8_t btn) {
-    pointing_device_button &= ~btn;
-    send_flag = true;
-}
 
 typedef union {
     struct {
@@ -85,20 +65,16 @@ void pointing_device_driver_init(void) {
     res |= i2c_writeReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_CMD, &dat, 1, I2C_TIMEOUT);
 
     // set HOLD time
-    dat = 0x10;
-    res |= i2c_writeReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_HOLD_TIME, &dat, 1, I2C_TIMEOUT);
+    // dat = 0x10;
+    // res |= i2c_writeReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_HOLD_TIME, &dat, 1, I2C_TIMEOUT);
 }
 
 report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
-    mtch6102_data_t mtch6102_data;
-    bool            is_valid = read_mtch6102(&mtch6102_data);
+    mtch6102_data_t mtch6102_data = {0};
+    bool is_valid = read_mtch6102(&mtch6102_data);
 
     if (is_valid) {
-        bool send_flag = process_mtch6102(&mtch6102_data, &mouse_report);
-        if (!send_flag) {
-            report_mouse_t  mouse_rep = {0};
-            return mouse_rep;
-        }
+        mouse_report = process_mtch6102(mtch6102_data, mouse_report);
     }
 
     return mouse_report;
@@ -147,19 +123,22 @@ report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, re
     //     left_report.x = 0;
     // }
     // uprintf("pointing_device_task_combined_user\n");
-    if (left_report.x == 0 || left_report.y == 0) {
-        if (right_report.x != 0 && right_report.y != 0) {
-            uprintf("right: x: %d, y: %d\n", right_report.x, right_report.y);
-        }
-        return right_report;
+    // if (left_report.x == 0 || left_report.y == 0) {
+    //     if (right_report.x != 0 && right_report.y != 0) {
+    //         uprintf("right: x: %d, y: %d\n", right_report.x, right_report.y);
+    //     }
+    //     return right_report;
+    // }
+    if (right_report.x != 0 || right_report.y != 0 || left_report.x != 0 || left_report.y != 0) {
+        uprintf("left: x: %d, y: %d, h: %d, v: %d | right: x: %d, y: %d, h: %d, v: %d \n ", left_report.x, left_report.y, left_report.h, left_report.v, right_report.x, right_report.y, right_report.h, right_report.v);
     }
-    if (right_report.x == 0 || right_report.y == 0) {
-        uprintf("left: x: %d, y: %d\n", left_report.x, left_report.y);
-        return left_report;
-    }
-    uprintf("left: x: %d, y: %d | right: x: %d, y: %d\n ", left_report.x, left_report.y, right_report.x, right_report.y);
+    // left_report.x = 0;
+    left_report.y = 0;
+    left_report.h = 0;
+    left_report.v = 0;
+
     // uprintf("\n", right_report.x, right_report.y);
-    return pointing_device_combine_reports(left_report, right_report);
+    return pointing_device_combine_reports(right_report, left_report);
 }
 
 bool read_mtch6102(mtch6102_data_t* const data) {
@@ -178,43 +157,60 @@ bool read_mtch6102(mtch6102_data_t* const data) {
     return true;
 }
 
-bool process_mtch6102(mtch6102_data_t const* const data, report_mouse_t* const rep_mouse) {
-    static uint16_t x_buf, y_buf;
-    static bool     touch_state;
-    static bool     release_button = false;
+report_mouse_t process_mtch6102(mtch6102_data_t data, report_mouse_t rep_mouse) {
+    static bool release_button = false;
+    static uint16_t buf_x = 0;
+    static uint16_t buf_y = 0;
 
-    uint16_t x_dif, y_dif;
-
-    if (touch_state && (data->status & TOUCH)) {
-        x_dif        = data->x - x_buf;
-        y_dif        = data->y - y_buf;
-        rep_mouse->x = y_dif * MTCH6102_Y_DIR;
-        rep_mouse->y = -(x_dif * MTCH6102_X_DIR);
-        send_flag    = true;
+    if (data.status & TOUCH) {
+        // if (is_keyboard_master()) {
+            rep_mouse.x = (mouse_xy_report_t) (data.y - buf_y);
+            rep_mouse.y = (mouse_xy_report_t) (data.x - buf_x);
+        // } else {
+        //     int16_t diff_y = data.y - buf_y;
+        //     int16_t diff_x = data.x - buf_x;
+        //     if (diff_y < INT8_MIN || diff_y > INT8_MAX) {
+        //         diff_y = (diff_y < INT8_MIN) ? INT8_MIN : INT8_MAX;
+        //     }
+        //     if (diff_x < INT8_MIN || diff_x > INT8_MAX) {
+        //         diff_x = (diff_x < INT8_MIN) ? INT8_MIN : INT8_MAX;
+        //     }
+        //     // uint16_t data_x = data.x;
+        //     // uint16_t data_y = data.y;
+        //     rep_mouse.x = diff_y;
+        //     rep_mouse.y = diff_x;
+        //     // rep_mouse.y = diff_x;
+        //     // rep_mouse.x = diff_y;
+        //     // rep_mouse.x = data.y / 4;
+        //     // rep_mouse.y = data.x / 4;
+        //     // rep_mouse.h = buf_y / 4;
+        //     // rep_mouse.v = buf_x / 4;
+            // rep_mouse.x = data.y;
+            // rep_mouse.y = data.x;
+            rep_mouse.h = buf_y;
+            rep_mouse.v = buf_x;
+        // }
+    } else {
+        rep_mouse.x = 0;
+        rep_mouse.y = 0;
     }
+    buf_x = data.x;
+    buf_y = data.y;
 
-    if ((data->status & GESTURE) && (data->gesture == GES_TAP || data->gesture == GES_DOUBLE_TAP)) {
-        rep_mouse->buttons = 1;
-        release_button     = true;
-        send_flag          = true;
-    } else if ((data->status & GESTURE) && (data->gesture == GES_HOLD)) {
-        rep_mouse->buttons = 2;
-        release_button     = true;
-        send_flag          = true;
+    if ((data.status & GESTURE) && (data.gesture == GES_TAP)) {
+        rep_mouse.buttons = 1;
+        release_button = true;
+    } else if ((data.status & GESTURE) && ( data.gesture == GES_DOUBLE_TAP)) {
+        rep_mouse.buttons = 2;
+        release_button = true;
+    } else if ((data.status & GESTURE) && ( data.gesture == GES_HOLD)) {
+        rep_mouse.buttons = 2;
+        release_button = true;
     } else if (release_button) {
-        rep_mouse->buttons = 0;
-        send_flag          = true;
+        rep_mouse.buttons = 0;
     }
 
-    if (pointing_device_button != 0) {
-        rep_mouse->buttons = pointing_device_button;
-    }
-
-    touch_state = data->status & TOUCH;
-    x_buf       = data->x;
-    y_buf       = data->y;
-
-    return send_flag;
+    return rep_mouse;
 }
 
 int sleep_mtch6102(void) {

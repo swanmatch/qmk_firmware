@@ -1,7 +1,8 @@
+AUDIO_ENABLE = no
 TOUCH_ENABLE = yes
 POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = custom
-MOUSEKEY_ENABLE = yes       # Mouse keys
+# MOUSEKEY_ENABLE = yes       # Mouse keys
 CONSOLE_ENABLE = yes
 
 SRC += mtch6102.c i2c_master.c

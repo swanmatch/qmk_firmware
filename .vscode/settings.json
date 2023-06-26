@@ -30,5 +30,6 @@
     },
     "clangd.arguments": [
         "--header-insertion=never"
-    ]
+    ],
+    "cmake.sourceDirectory": "/Users/swanmatch/kb/qmk_firmware/lib/pico-sdk/src/common/pico_bit_ops"
 }
