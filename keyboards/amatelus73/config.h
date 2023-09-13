@@ -17,16 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "config_common.h"
-
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x16C0
-#define PRODUCT_ID      0x27DB
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    SwanMatch
-#define PRODUCT         Amatelus73
-#define DESCRIPTION     DuplexMatrix Big SemiErgoKeyboard
-
 /* key matrix size */
 #define MATRIX_ROWS 16
 #define MATRIX_COLS 5
@@ -43,7 +33,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #define MATRIX_COL_PINS { D4, C6, D7, E6, B4 }
 #define MATRIX_ROW_PINS { F4, F5, F6, F7, B1, B3, B2, B6 }
-#define UNUSED_PINS
 /* COL2ROW, ROW2COL*/
 // #define DIODE_DIRECTION COL2ROW
 
@@ -56,9 +45,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define BACKLIGHT_BREATHING
 // #define BACKLIGHT_LEVELS 3
 
+#define WS2812_DI_PIN D3
 #define RGB_DI_PIN D3
-#ifdef RGB_DI_PIN
-#define RGBLED_NUM 74
+#ifdef WS2812_DI_PIN
+#define RGB_MATRIX_LED_COUNT 74
   //#define RGBLIGHT_SPLIT
   #ifdef RGB_MATRIX_ENABLE
     #define DRIVER_LED_TOTAL 74
@@ -222,11 +212,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
 
-/* disable these deprecated features by default */
-#ifndef LINK_TIME_OPTIMIZATION_ENABLE
-  #define NO_ACTION_MACRO
-  #define NO_ACTION_FUNCTION
-#endif
 /*
  * MIDI options
  */
