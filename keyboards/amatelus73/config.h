@@ -46,12 +46,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define BACKLIGHT_LEVELS 3
 
 #define WS2812_DI_PIN D3
-#define RGB_DI_PIN D3
 #ifdef WS2812_DI_PIN
 #define RGB_MATRIX_LED_COUNT 74
+#define DRIVER_LED_TOTAL 74
   //#define RGBLIGHT_SPLIT
   #ifdef RGB_MATRIX_ENABLE
-    #define DRIVER_LED_TOTAL 74
     #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 150
 
     #define RGB_MATRIX_HUE_STEP 8
