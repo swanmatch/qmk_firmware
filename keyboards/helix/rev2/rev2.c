@@ -16,8 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 >>>>>>> 5ace174cd3894c485157773c73a1cb40999cdd7b
 #include "helix.h"
+=======
+#include "rev2.h"
+>>>>>>> 0f341dfdd3e6de3c0a137dae8bbe2223e817c901
 
 // Each keymap.c should use is_keyboard_master() instead of 'is_master'.
 // But keep 'is_master' for a while for backwards compatibility

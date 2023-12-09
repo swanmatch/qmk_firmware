@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+<<<<<<< HEAD
 /* Uncomment below if use underglow */
 #define RGB_DI_PIN F4
 #ifdef RGB_DI_PIN
@@ -40,6 +41,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_VAL_STEP 8
 #endif
 
+=======
+>>>>>>> 0f341dfdd3e6de3c0a137dae8bbe2223e817c901
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #define LOCKING_SUPPORT_ENABLE
 /* Locking resynchronize hack */
