@@ -32,12 +32,12 @@ enum layer_names {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_BASE] = {
-        { KC_TAB, KC_BTN3, KC_MUTE},
-        { LT(_ADJUST, KC_MPRV), KC_MPLY, KC_MNXT, KC_BTN2}
+        { KC_TAB, KC_BTN3, KC_MUTE },
+        { LT(_ADJUST, KC_MPRV), KC_MPLY, KC_MNXT, KC_BTN2 }
     },
     [_ADJUST] = {
-        { _______, _______, AU_TOG},
-        { _______, RGB_MOD, RGB_RMOD, RGB_TOG}
+        { _______, _______, AU_TOGG },
+        { _______, RGB_MOD, RGB_RMOD, RGB_TOG }
     }
 };
 
