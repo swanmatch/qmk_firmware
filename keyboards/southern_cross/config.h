@@ -17,15 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "config_common.h"
-
-/* USB Device descriptor parameter */
-#define VENDOR_ID    0x16C0
-#define PRODUCT_ID   0x27DB
-#define DEVICE_VER   0x0001
-#define MANUFACTURER swan_match
-#define PRODUCT      SouthernCross
-
 /* key matrix size */
 #define MATRIX_ROWS 2
 #define MATRIX_COLS 4
@@ -41,7 +32,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 #define DIRECT_PINS {{ B3, B1, D7, B4 }, { B6, B2, E6, B5 }}
-#define UNUSED_PINS
 
 /* COL2ROW, ROW2COL */
 // #define DIODE_DIRECTION COL2ROW
@@ -61,8 +51,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define BACKLIGHT_LEVELS 3
 //#define BACKLIGHT_BREATHING
 
-#define RGB_DI_PIN D3
-#ifdef RGB_DI_PIN
+#define WS2812_DI_PIN D3
+#ifdef WS2812_DI_PIN
 #    define RGBLED_NUM 4
 #    define RGBLIGHT_HUE_STEP 8
 #    define RGBLIGHT_SAT_STEP 8
@@ -141,10 +131,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
-
-/* disable these deprecated features by default */
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
 
 /* Bootmagic Lite key configuration */
 //#define BOOTMAGIC_LITE_ROW 0

@@ -42,7 +42,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-//   iota_gfx_force_dirty();
+    // if (!encoder_update_user(index, clockwise)) {
+    //   return false; /* Don't process further events if user function exists and returns false */
+    // }
     if (layer_state == _BASE) {
         switch (index) {
             case 0: /* left encoder */

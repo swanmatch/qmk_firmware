@@ -50,8 +50,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         MO(_ADJUST),             RGB_SAD, RGB_HUD,          _______
     ),
     [_ADJUST] = LAYOUT(
-        _______,                 RGB_VAI,  RESET,           KC_BALUS,
-        _______,                 RGB_VAD,  EEPROM_RESET,    _______
+        _______,                 RGB_VAI,  QK_REBOOT,       KC_BALUS,
+        _______,                 RGB_VAD,  QK_REBOOT,    _______
     )
 };
 
