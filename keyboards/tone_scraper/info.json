@@ -1,6 +1,7 @@
 {
     "keyboard_name": "tone_scraper",
     "url": "",
+    "manufacturer": "SwanMatch",
     "usb": {
         "vid": "0x16C0",
         "pid": "0x27DB",
