@@ -26,10 +26,10 @@
     },
     "python.formatting.provider": "yapf",
     "[json]": {
-	    "editor.formatOnSave": false
+        "editor.formatOnSave": false
     },
-    "C_Cpp.errorSquiggles": "disabled",
-    "cSpell.words": [
-        "mtch"
-    ]
+    "clangd.arguments": [
+        "--header-insertion=never"
+    ],
+    "cmake.sourceDirectory": "/Users/swanmatch/kb/qmk_firmware/lib/pico-sdk/src/common/pico_bit_ops"
 }

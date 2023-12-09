@@ -38,13 +38,12 @@ typedef enum {
 
 typedef enum { GES_TAP = 0x10, GES_HOLD = 0x11, GES_DOUBLE_TAP = 0x20 } MTCH6102_GESTURE_CODE;
 
-void pointing_device_set_button(uint8_t btn);
-void pointing_device_clear_button(uint8_t btn);
+// void pointing_device_set_button(uint8_t btn);
+// void pointing_device_clear_button(uint8_t btn);
 
 uint16_t check_mtch6102(void);
 int      init_mtch6102(void);
 bool     read_mtch6102(mtch6102_data_t* const data);
-bool     process_mtch6102(mtch6102_data_t const* const data,
-                          report_mouse_t* const        rep_mouse);
+report_mouse_t process_mtch6102(mtch6102_data_t data, report_mouse_t rep_mouse);
 int      sleep_mtch6102(void);
 void     test_mtch6102(void);
