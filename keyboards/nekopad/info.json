@@ -1,0 +1,57 @@
+{
+    "manufacturer": "swan_match",
+    "keyboard_name": "nekopad",
+    "maintainer": "swanmatch",
+    "bootloader": "caterina",
+    "diode_direction": "COL2ROW",
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "rgblight": true
+    },
+    "matrix_pins": {
+        "cols": ["F4", "F5", "F6", "F7"],
+        "rows": ["D4", "C6"]
+    },
+    "processor": "atmega32u4",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"matrix": [0, 0], "x": 0, "y": 0},
+                {"matrix": [0, 1], "x": 1, "y": 0},
+                {"matrix": [0, 2], "x": 2, "y": 0},
+                {"matrix": [0, 3], "x": 3, "y": 0},
+                {"matrix": [1, 0], "x": 0, "y": 1},
+                {"matrix": [1, 1], "x": 1, "y": 1},
+                {"matrix": [1, 2], "x": 2, "y": 1}
+            ]
+        }
+    },
+    "rgblight":{
+        "led_count": 7,
+        "animations": {
+            "static_light": true,
+            "breathing": true,
+            "rainbow_mood": true,
+            "snake": true,
+            "rainbow_swirl": true,
+            "knight": true,
+            "static_gradient": true,
+            "alternating": true,
+            "twinkle": true
+        }
+    },
+    "ws2812": {
+        "pin": "D3"
+    }
+}

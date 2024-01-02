@@ -1,0 +1,15 @@
+{
+    "keyboard": "nekopad",
+    "keymap": "default",
+    "layout": "LAYOUT",
+    "layers": [
+        [
+            "KC_N","KC_E","KC_K","KC_O",
+            "KC_P","LT(1, KC_A)","KC_D"
+        ],
+        [
+            "RGB_HUD","RGB_HUI","RGB_SAD","RGB_SAI",
+            "RGB_RMOD","KC_TRNS","RGB_MOD"
+        ]
+    ]
+}
