@@ -8,7 +8,7 @@ enum layer {
 };
 
 #ifdef OLED_ENABLE
-#include <stdio.h>
+// #include <stdio.h>
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_180;
 }
@@ -55,10 +55,10 @@ void render_led_stat(void) {
       rgblight_config_bak.sat != rgblight_config.sat ||
       rgblight_config_bak.val != rgblight_config.val
   ) {
-    snprintf(led_buf, sizeof(led_buf) - 1, "  H:%3d S:%3d V:%3d\n",
-      rgblight_config.hue,
-      rgblight_config.sat,
-      rgblight_config.val);
+    // snprintf(led_buf, sizeof(led_buf) - 1, "  H:%3d S:%3d V:%3d\n",
+    //   rgblight_config.hue,
+    //   rgblight_config.sat,
+    //   rgblight_config.val);
     rgblight_config_bak = rgblight_config;
   }
 
