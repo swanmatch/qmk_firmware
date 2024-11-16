@@ -65,8 +65,8 @@ void pointing_device_driver_init(void) {
     res |= i2c_writeReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_CMD, &dat, 1, I2C_TIMEOUT);
 
     // set HOLD time
-    // dat = 0x10;
-    // res |= i2c_writeReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_HOLD_TIME, &dat, 1, I2C_TIMEOUT);
+    dat = 0x10;
+    res |= i2c_writeReg(I2C_7BIT_ADDR(MTCH6102_READ_ADDR), MTCH6102_REG_HOLD_TIME, &dat, 1, I2C_TIMEOUT);
 }
 
 report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
@@ -81,65 +81,65 @@ report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
 }
 
 
-report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
-    // right_report.h = left_report.x;
-    // right_report.v = left_report.y;
-    // left_report.x = 0;
-    // left_report.y = 0;
-    // if (left_report.y > 0 && right_report.y > 0) {
-    //     // SWIPE UP
-    //     right_report.v = 1;
-    //     left_report.v = 1;
-    //     right_report.y = 0;
-    //     left_report.y = 0;
-    // } else if (left_report.y < 0 && right_report.y < 0 ) {
-    //     // SWIPE DOWN
-    //     right_report.v = -1;
-    //     left_report.v = -1;
-    //     right_report.y = 0;
-    //     left_report.y = 0;
-    // }
-    // if ( left_report.x > 0 && right_report.x > 0) {
-    //     // SWIPE RIGHT
-    //     right_report.h = 1;
-    //     left_report.h = 1;
-    //     right_report.x = 0;
-    //     left_report.x = 0;
-    // } else if ( left_report.x < 0 && right_report.x < 0) {
-    //     // SWIPE RIGHT
-    //     right_report.h = -1;
-    //     left_report.h = -1;
-    //     right_report.x = 0;
-    //     left_report.x = 0;
-    // } else if ( left_report.x > 0 && right_report.x < 0) {
-    //     // PINCH IN
-    //     tap_code16(LCTL(KC_MINS));
-    //     right_report.x = 0;
-    //     left_report.x = 0;
-    // } else if ( left_report.x < 0 && right_report.x > 0) {
-    //     // PINCH OUT
-    //     tap_code16(LCTL(KC_EQL));
-    //     right_report.x = 0;
-    //     left_report.x = 0;
-    // }
-    // uprintf("pointing_device_task_combined_user\n");
-    // if (left_report.x == 0 || left_report.y == 0) {
-    //     if (right_report.x != 0 && right_report.y != 0) {
-    //         uprintf("right: x: %d, y: %d\n", right_report.x, right_report.y);
-    //     }
-    //     return right_report;
-    // }
-    if (right_report.x != 0 || right_report.y != 0 || left_report.x != 0 || left_report.y != 0) {
-        uprintf("left: x: %d, y: %d, h: %d, v: %d | right: x: %d, y: %d, h: %d, v: %d \n ", left_report.x, left_report.y, left_report.h, left_report.v, right_report.x, right_report.y, right_report.h, right_report.v);
-    }
-    // left_report.x = 0;
-    left_report.y = 0;
-    left_report.h = 0;
-    left_report.v = 0;
+// report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
+//     // right_report.h = left_report.x;
+//     // right_report.v = left_report.y;
+//     // left_report.x = 0;
+//     // left_report.y = 0;
+//     // if (left_report.y > 0 && right_report.y > 0) {
+//     //     // SWIPE UP
+//     //     right_report.v = 1;
+//     //     left_report.v = 1;
+//     //     right_report.y = 0;
+//     //     left_report.y = 0;
+//     // } else if (left_report.y < 0 && right_report.y < 0 ) {
+//     //     // SWIPE DOWN
+//     //     right_report.v = -1;
+//     //     left_report.v = -1;
+//     //     right_report.y = 0;
+//     //     left_report.y = 0;
+//     // }
+//     // if ( left_report.x > 0 && right_report.x > 0) {
+//     //     // SWIPE RIGHT
+//     //     right_report.h = 1;
+//     //     left_report.h = 1;
+//     //     right_report.x = 0;
+//     //     left_report.x = 0;
+//     // } else if ( left_report.x < 0 && right_report.x < 0) {
+//     //     // SWIPE RIGHT
+//     //     right_report.h = -1;
+//     //     left_report.h = -1;
+//     //     right_report.x = 0;
+//     //     left_report.x = 0;
+//     // } else if ( left_report.x > 0 && right_report.x < 0) {
+//     //     // PINCH IN
+//     //     tap_code16(LCTL(KC_MINS));
+//     //     right_report.x = 0;
+//     //     left_report.x = 0;
+//     // } else if ( left_report.x < 0 && right_report.x > 0) {
+//     //     // PINCH OUT
+//     //     tap_code16(LCTL(KC_EQL));
+//     //     right_report.x = 0;
+//     //     left_report.x = 0;
+//     // }
+//     // uprintf("pointing_device_task_combined_user\n");
+//     // if (left_report.x == 0 || left_report.y == 0) {
+//     //     if (right_report.x != 0 && right_report.y != 0) {
+//     //         uprintf("right: x: %d, y: %d\n", right_report.x, right_report.y);
+//     //     }
+//     //     return right_report;
+//     // }
+//     if (right_report.x != 0 || right_report.y != 0 || left_report.x != 0 || left_report.y != 0) {
+//         uprintf("left: x: %d, y: %d, h: %d, v: %d | right: x: %d, y: %d, h: %d, v: %d \n ", left_report.x, left_report.y, left_report.h, left_report.v, right_report.x, right_report.y, right_report.h, right_report.v);
+//     }
+//     // left_report.x = 0;
+//     left_report.y = 0;
+//     left_report.h = 0;
+//     left_report.v = 0;
 
-    // uprintf("\n", right_report.x, right_report.y);
-    return pointing_device_combine_reports(right_report, left_report);
-}
+//     // uprintf("\n", right_report.x, right_report.y);
+//     // return pointing_device_combine_reports(right_report, left_report);
+// }
 
 bool read_mtch6102(mtch6102_data_t* const data) {
     mtch6102_reg_t reg;
@@ -187,8 +187,8 @@ report_mouse_t process_mtch6102(mtch6102_data_t data, report_mouse_t rep_mouse) 
         //     // rep_mouse.v = buf_x / 4;
             // rep_mouse.x = data.y;
             // rep_mouse.y = data.x;
-            rep_mouse.h = buf_y;
-            rep_mouse.v = buf_x;
+            // rep_mouse.h = buf_y;
+            // rep_mouse.v = buf_x;
         // }
     } else {
         rep_mouse.x = 0;
@@ -200,9 +200,9 @@ report_mouse_t process_mtch6102(mtch6102_data_t data, report_mouse_t rep_mouse) 
     if ((data.status & GESTURE) && (data.gesture == GES_TAP)) {
         rep_mouse.buttons = 1;
         release_button = true;
-    } else if ((data.status & GESTURE) && ( data.gesture == GES_DOUBLE_TAP)) {
-        rep_mouse.buttons = 2;
-        release_button = true;
+    // } else if ((data.status & GESTURE) && ( data.gesture == GES_DOUBLE_TAP)) {
+    //     rep_mouse.buttons = 2;
+    //     release_button = true;
     } else if ((data.status & GESTURE) && ( data.gesture == GES_HOLD)) {
         rep_mouse.buttons = 2;
         release_button = true;
