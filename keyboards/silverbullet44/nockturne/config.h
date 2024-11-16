@@ -8,8 +8,16 @@
 // #define SELECT_SOFT_SERIAL_SPEED 0
 // #undef MASTER_RIGHT
 
-#define SPLIT_POINTING_ENABLE
-#define POINTING_DEVICE_COMBINED
+// #define SPLIT_POINTING_ENABLE
+// #define POINTING_DEVICE_COMBINED
+// #define ENCODERS_PAD_A {E6}
+// #define ENCODERS_PAD_B {B3}
+#define ENCODERS_PAD_A { E6 }
+#define ENCODERS_PAD_B { B3 }
+#define ENCODERS_RESOLUTIONS { 4 }
+#define ENCODERS_PAD_A_RIGHT { E6 }
+#define ENCODERS_PAD_B_RIGHT { B3 }
+#define ENCODERS_RESOLUTIONS_RIGHT { 4 }
 
 #ifdef RGB_DI_PIN
   #undef RGBLED_NUM
@@ -18,4 +26,3 @@
   #define RGBLED_NUM 44
   #define RGBLED_SPLIT {22, 22}
 #endif
-

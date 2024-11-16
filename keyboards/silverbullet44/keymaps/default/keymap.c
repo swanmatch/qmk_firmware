@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+     *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -96,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_CALC] = LAYOUT(
     QK_RBT,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                             KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
     _______, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LBRC,                          KC_RBRC, KC_4,    KC_5,    KC_6,    KC_PPLS, _______,
-    _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_EXLM, KC_LCBR,                          KC_RCBR, KC_1,    KC_2,    KC_3,    KC_PEQL, _______,
+_______, KC_CIRC, KC_AMPR, KC_ASTR, KC_EXLM, KC_LCBR,                          KC_RCBR, KC_1,    KC_2,    KC_3,    KC_PEQL, _______,
                                _______, _______, _______, _______,    MO(_ADJUST), KC_0,    KC_00,   KC_PDOT
   ),
 
@@ -107,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |Music |FrqUp |Sound |      |                                  | SPD+ | MOD+ | VAL+ | SAD+ | HUE+ |      |
  * |------+------+------+------+------+------|                                  |------+------+------+------+------+------|
  * |      |      |Scale |FrqDwn|      |      |-------.-------.  ,---------------| SPD- | SPD- | VAL- | SAD- | HUE- |      |
- * `-----------------------------------------/       /       /   \       \       \----------------------------------------'
+* `-----------------------------------------/       /       /   \       \       \----------------------------------------'
  *                          |      |      | /       /       /     \       \       \  |      |      |
  *                          |      |      |/       /       /       \       \       \ |      |      |
  *                          `-----------------------------'         '------------------------------'
@@ -127,6 +127,49 @@ extern rgblight_config_t rgblight_config;
 int  RGB_current_mode;
 #endif
 
+#ifdef ENCODER_ENABLE
+bool encoder_update_user(uint8_t index, bool clockwise) {
+//   iota_gfx_force_dirty();
+    if (layer_state == _QWERTY) {
+        switch (index) {
+            case 0: /* left encoder */
+                if (clockwise) {
+                    tap_code(KC_VOLU);
+                } else {
+                    tap_code(KC_VOLD);
+                }
+                break;
+            case 1: /* right encoder */
+                if (clockwise) {
+                    tap_code(KC_MS_WH_UP);
+                } else {
+                    tap_code(KC_MS_WH_DOWN);
+                }
+                break;
+        }
+} else {
+      #ifdef RGBLIGHT_ENABLE
+        switch (index) {
+            case 0: /* left encoder */
+                if (clockwise) {
+                    rgblight_increase_hue_noeeprom();
+                } else {
+                    rgblight_decrease_hue_noeeprom();
+                }
+                break;
+            case 1: /* right encoder */
+                if (clockwise) {
+                    rgblight_increase_sat_noeeprom();
+                } else {
+                    rgblight_decrease_sat_noeeprom();
+                }
+                break;
+        }
+      #endif
+    }
+    return true;
+}
+#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
