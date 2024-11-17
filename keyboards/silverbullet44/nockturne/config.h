@@ -15,9 +15,6 @@
 #define ENCODERS_PAD_A { E6 }
 #define ENCODERS_PAD_B { B3 }
 #define ENCODERS_RESOLUTIONS { 4 }
-#define ENCODERS_PAD_A_RIGHT { E6 }
-#define ENCODERS_PAD_B_RIGHT { B3 }
-#define ENCODERS_RESOLUTIONS_RIGHT { 4 }
 
 #ifdef RGB_DI_PIN
   #undef RGBLED_NUM

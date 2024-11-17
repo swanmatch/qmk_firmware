@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,   KC_Q, KC_W, KC_E, KC_R, KC_T,                KC_Y, KC_U, KC_I,    KC_O,   KC_P,    KC_EQL,
     KC_LSFT,  KC_A, KC_S, KC_D, KC_F, KC_G,                KC_H, KC_J, KC_K,    KC_L,   KC_SCLN, KC_QUOT,
     KC_LCTL,  KC_Z, KC_X, KC_C, KC_V, KC_B,                KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-                  ALT_F5, ALT_BSPC, SFT_SPC, CALC,    CRSR, CTRL_ENT, KC_DEL, GUI_F12
+                 ALT_F5, ALT_BSPC, SFT_SPC, CALC,    CRSR, CTRL_ENT, KC_DEL, GUI_F12
   ),
 
 /* Cursor
@@ -129,45 +129,21 @@ int  RGB_current_mode;
 
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
-//   iota_gfx_force_dirty();
-    if (layer_state == _QWERTY) {
-        switch (index) {
-            case 0: /* left encoder */
-                if (clockwise) {
-                    tap_code(KC_VOLU);
-                } else {
-                    tap_code(KC_VOLD);
-                }
-                break;
-            case 1: /* right encoder */
-                if (clockwise) {
-                    tap_code(KC_MS_WH_UP);
-                } else {
-                    tap_code(KC_MS_WH_DOWN);
-                }
-                break;
+    if (index == 0) {
+        if (clockwise) {
+            tap_code(KC_VOLD);
+        } else {
+            tap_code(KC_VOLU);
         }
-} else {
-      #ifdef RGBLIGHT_ENABLE
-        switch (index) {
-            case 0: /* left encoder */
-                if (clockwise) {
-                    rgblight_increase_hue_noeeprom();
-                } else {
-                    rgblight_decrease_hue_noeeprom();
-                }
-                break;
-            case 1: /* right encoder */
-                if (clockwise) {
-                    rgblight_increase_sat_noeeprom();
-                } else {
-                    rgblight_decrease_sat_noeeprom();
-                }
-                break;
+    } else if (index == 1) {
+        if (clockwise) {
+            // tap_code(KC_C);
+            tap_code(KC_WH_U);
+        } else {
+            tap_code(KC_WH_D);
         }
-      #endif
     }
-    return true;
+    return false;
 }
 #endif
 
@@ -235,6 +211,10 @@ void matrix_scan_user() {
         if (mouse_rep.y != 0) {
             mouse_rep.v = mouse_rep.y > 0 ? 1 : -1;
             mouse_rep.y = 0;
+        }
+
+        if (mouse_rep.buttons == 1) {
+            mouse_rep.buttons = 3;
         }
 
         pointing_device_set_report(mouse_rep);
